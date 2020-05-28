@@ -1,5 +1,5 @@
 // @ts-ignore
-import StateMachine from "../state-machine.ts";
+import StateMachine from "https://raw.githubusercontent.com/RomAnoX/deno-state-machine/master/state-machine.ts";
 
 const machine: any = new StateMachine({
   initial: "solid",

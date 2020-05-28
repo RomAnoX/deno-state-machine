@@ -13,7 +13,7 @@ interface IActions {
 }
 
 interface IActionEvent {
-  (args: object, data: object): void | boolean | string;
+  (args: object, machine: StateMachine): void | boolean | string;
 }
 
 interface IStateAction {
@@ -38,7 +38,7 @@ class StateMachine {
   _states: IStates;
   _actions: IActions;
   _state: string;
-  _data: object;
+  data: object;
   [action: string]: any
 
   setActions() {
@@ -69,11 +69,11 @@ class StateMachine {
           const before = actionStates[this._state].before;
           const after = actionStates[this._state].after;
           if (before) {
-            before(args || {}, this._data);
+            before(args || {}, this);
           }
           this._state = actionStates[this._state].to;
           if (after) {
-            after(args || {}, this._data);
+            after(args || {}, this);
           }
         }
         return this;
@@ -88,7 +88,7 @@ class StateMachine {
       throw `${initial} is not a valid state`;
     }
 
-    this._data = data;
+    this.data = data;
     this._state = initial;
     this._states = states;
     this._config = config;
