@@ -1,11 +1,11 @@
-interface IActionState {
+interface ITransition {
   to: string;
   before?: IActionEvent;
   after?: IActionEvent;
 }
 
 interface IActionStates {
-  [from: string]: IActionState;
+  [from: string]: ITransition;
 }
 
 interface IActions {
@@ -16,15 +16,12 @@ interface IActionEvent {
   (args: object, machine: StateMachine): void | boolean | string;
 }
 
-interface IStateAction {
+interface IActionTransition extends ITransition {
   action: string;
-  to: string;
-  before?: IActionEvent;
-  after?: IActionEvent;
 }
 
 interface IStates {
-  [state: string]: IStateAction[];
+  [state: string]: IActionTransition[];
 }
 
 interface IConfig {
